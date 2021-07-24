@@ -1,0 +1,31 @@
+#! /bin/bash
+
+# wrapper script to launch emacs correctly on MacOS
+
+# aquamacs=/Applications/Aquamacs.app/Contents/MacOS/Aquamacs
+aquamacs=/Applications/Emacs23.app/Contents/MacOS/Emacs
+macports_emacs=/Applications/MacPorts/Emacs.app/Contents/MacOS/Emacs
+
+if [ -x $aquamacs ] ; then
+    #open $aquamacs --args "$@"
+    $aquamacs "$@"
+elif [ -x $macports_emacs ] ; then
+    $macports_emacs "$@"
+else
+    # /Applications/Emacs.app/Contents/MacOS/Emacs "$@"
+
+    # Emacs24 has a bug where tramp uses TMPDIR to build up a 
+    # file so setting TMPDIR to /tmp fixes that
+    # https://trac.macports.org/ticket/29794
+    # TMPDIR=/tmp /Applications/Emacs24.0.92.app/Contents/MacOS/Emacs "$@"
+    # TMPDIR=/tmp /Applications/Emacs24.0.93.app/Contents/MacOS/Emacs "$@"
+    # TMPDIR=/tmp /Applications/Emacs24.0.94.app/Contents/MacOS/Emacs "$@"
+    # TMPDIR=/tmp /Applications/Emacs24.0.95.app/Contents/MacOS/Emacs "$@"
+    # TMPDIR=/tmp /Applications/Emacs24.1.app/Contents/MacOS/Emacs "$@"
+
+    # Try this without any of these problems
+    # /Applications/Emacs.app/Contents/MacOS/Emacs "$@"
+    # /Applications/Emacs24.4.app/Contents/MacOS/Emacs "$@"
+    # /Applications/Emacs-24.5-1.app/Contents/MacOS/Emacs "$@"
+    /Applications/Emacs.app/Contents/MacOS/Emacs "$@"
+fi

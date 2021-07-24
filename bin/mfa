@@ -1,0 +1,20 @@
+#! /bin/bash
+
+# Simple wrapper around oathtool to get a MFA code.
+#
+# Delegates to my keychain wrapper script to get secrets from keychain
+# Assumes that you have the key for the MFA (QR code).
+#
+
+set -e
+
+USAGE="$0 <key>"
+KEY="${1:-mfa-jumpcloud}"
+if [ -z "$KEY" ] ; then
+    >&2 echo "$USAGE"
+    exit 1
+fi
+
+key_value=$(keychain "$KEY")
+# TODO: support the -w arg to print out multiple of these?
+oathtool --totp --base32 "$key_value"

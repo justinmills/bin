@@ -1,0 +1,19 @@
+#! /bin/bash
+
+set -e
+
+# Script to deal with the current branch you're on having been merged.
+
+BRANCH="$(git branch | grep "^*" | awk '{print $2}')"
+
+# TODO: handle -squash'd branches special by deleting forcibly, the non-squash branch.
+
+echo "Changing to main, pulling latest changes and cleaning up ${BRANCH}"
+
+git checkout main
+git pull
+git branch -D "${BRANCH}"
+if [[ "$BRANCH" = *-squash ]] ; then
+    echo "Force removing -squash branch source"
+    git branch -D "${BRANCH%%-squash}"
+fi

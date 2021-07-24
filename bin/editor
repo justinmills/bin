@@ -1,0 +1,9 @@
+#! /bin/bash
+
+# I set EDITOR to run this which runs emacs in "wait" mode. See "m" for the
+# no-wait mode version fo this.
+
+# /Applications/Emacs-24.5-1.app/Contents/MacOS/bin/emacsclient $@
+
+# With Spacemacs, I use emacs installed via brew
+/usr/local/bin/emacsclient $@
