@@ -87,6 +87,7 @@ else
     export PATH=${PATH_BREW}:${PATH_OS}
 fi
 add-to-path ~/bin
+add-to-path ~/bin-private
 add-to-path /Applications/Emacs.app/Contents/MaxOS/bin
 add-to-path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 # Elastic Beanstalk CLI
