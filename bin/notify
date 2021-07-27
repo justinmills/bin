@@ -1,0 +1,9 @@
+#! /bin/bash
+
+# TODO: support optional title
+title="From the command line"
+msg="$1"
+
+script="display notification \"$msg\" with title \"$title\""
+
+osascript -e "$script"
