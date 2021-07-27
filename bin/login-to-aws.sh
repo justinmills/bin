@@ -29,3 +29,5 @@ for account in  $ACCOUNTS ; do
     saml2aws login --skip-prompt "--idp-account=$account" "--username=$username" "--password=$password" "--mfa-token=$mfa"
     echo
 done
+
+notify "Done logging into AWS ($ACCOUNTS)"
