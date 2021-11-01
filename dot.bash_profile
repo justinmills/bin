@@ -1,8 +1,15 @@
 #! /bin/bash
 
-if [ $TERM != dumb ] ; then
-    echo "setting up..."
-fi
+function initialization_message {
+    if [ $TERM != dumb ] ; then
+        echo "$@"
+    else
+        # Do nothing
+        :
+    fi
+}
+
+initialization_message "Starting initialization..."
 
 IS_WINDOWS=false
 if [[ "$(uname)" = CYGWIN* ]] ; then
@@ -161,32 +168,35 @@ fi
 
 # ------------------------------------------------------------------------------
 # Done..with everything that isn't wired in via third party...
-if [ $TERM != dumb ] ; then
-    echo Done with .bashrc
-fi
+initialization_message "Done with .bashrc, onto 3rd party add-ons"
 
 # ------------------------------------------------------------------------------
 # 3rd party add-ons. These are generally tacked on by the app in question...
 
 # Direnv, nifty environment loading like rvmrc.
+initialization_message "Initializing direnv"
 eval "$(direnv hook bash)"
 
 # iTerm shell integration
+initialization_message "Initializing iTerm shell integration"
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 
 # NVM manage multiple versions of node/nvm.
+initialization_message "Initializing nvm"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # This is for serverless tab completion
+initialization_message "Initializing serverless"
 [ -f ~/.config/tabtab/__tabtab.bash ] && . ~/.config/tabtab/__tabtab.bash || true
 
 
 # Python virtualization layer(s)
 # Use pyenv for python env management
+initialization_message "Initializing pyenv"
 eval "$(pyenv init -)"
 
 # pipenv bash completions
+initialization_message "Initializing pipenv"
 eval "$(pipenv --completion)"
-
