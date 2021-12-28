@@ -89,9 +89,11 @@ if $IS_WINDOWS ; then
     # TODO: set a default path?
     true
 else
-    export PATH_BREW=/usr/local/bin:/usr/local/sbin
-    export PATH_OS=/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin
-    export PATH=${PATH_BREW}:${PATH_OS}
+    # Setup Homebrew path - let it do it for us...
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    # export PATH_BREW=/usr/local/bin:/usr/local/sbin
+    # export PATH_OS=/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin
+    # export PATH=${PATH_BREW}:${PATH_OS}
 fi
 add-to-path ~/bin-private
 add-to-path ~/bin
@@ -113,6 +115,7 @@ add-to-path ~/.local/bin
 
 # Bash completions. I use homebrew for this now, so much of this is legacy or for macports.
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    initialization_message "Initializing bash completions"
     . $(brew --prefix)/etc/bash_completion
 fi
 # Completions for screen wrapper
