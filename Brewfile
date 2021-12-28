@@ -29,6 +29,17 @@ brew "pyenv"
 
 # tap "d12frosted/emacs-plus"
 
+# Databases
+brew "sqlite"
+brew "freetds"
+brew "mongocli"
+brew "mongosh"
+brew "mysql"
+brew "mysql-client"
+brew "postgresql"
+tap "microsoft/mssql-release"
+brew "microsoft/mssql-release/msodbcsql17"
+brew "microsoft/mssql-release/mssql-tools"
 
 # For Terraform
 tap "hashicorp/tap"
