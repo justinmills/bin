@@ -27,7 +27,14 @@ brew "nvm"
 brew "pyenv"
 # pipenv installed separately
 
-# tap "d12frosted/emacs-plus"
+# Emacs
+tap "d12frosted/emacs-plus"
+brew "d12frosted/emacs-plus/emacs-plus@29", args: ["with-spacemacs-icon"], link: true
+
+# Font required by spacemacs
+# tap "homebrew/cask-fonts"
+# cask "font-source-code-pro"
+
 
 # Databases
 brew "sqlite"

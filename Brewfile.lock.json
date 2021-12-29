@@ -853,6 +853,16 @@
       "microsoft/mssql-release/mssql-tools": {
         "version": "17.8.1.1",
         "bottle": false
+      },
+      "d12frosted/emacs-plus/emacs-plus@29": {
+        "version": "29.0.50",
+        "bottle": false,
+        "options": {
+          "args": [
+            "with-spacemacs-icon"
+          ],
+          "link": true
+        }
       }
     },
     "tap": {
@@ -861,6 +871,9 @@
       },
       "microsoft/mssql-release": {
         "revision": "d08a3cca56228e3f454d105aae0d13ee01761a8d"
+      },
+      "d12frosted/emacs-plus": {
+        "revision": "aaf5811a00bf2a826fbe8d91a24f9e5029af1e97"
       }
     }
   },
