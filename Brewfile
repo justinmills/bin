@@ -32,8 +32,9 @@ tap "d12frosted/emacs-plus"
 brew "d12frosted/emacs-plus/emacs-plus@29", args: ["with-spacemacs-icon"], link: true
 
 # Font required by spacemacs
-# tap "homebrew/cask-fonts"
-# cask "font-source-code-pro"
+tap "homebrew/cask-fonts"
+brew "svn"  # This font requires svn...on my
+cask "font-source-code-pro"
 
 
 # Databases
