@@ -205,5 +205,7 @@ if command -v pyenv 1>/dev/null 2>&1; then
 fi
 
 # pipenv bash completions
-initialization_message "Initializing pipenv"
-eval "$(pipenv --completion)"
+# cannot enable this until this issue is resolved: 
+# https://github.com/pypa/pipenv/issues/4872
+# initialization_message "Initializing pipenv"
+# eval "$(_PIPENV_COMPLETE=bash_source pipenv)"
