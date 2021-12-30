@@ -902,6 +902,16 @@
             }
           }
         }
+      },
+      "d12frosted/emacs-plus/emacs-plus@28": {
+        "version": "28.0.50",
+        "bottle": false,
+        "options": {
+          "args": [
+            "with-spacemacs-icon"
+          ],
+          "link": true
+        }
       }
     },
     "tap": {
@@ -933,9 +943,9 @@
         "HOMEBREW_VERSION": "3.3.9",
         "HOMEBREW_PREFIX": "/opt/homebrew",
         "Homebrew/homebrew-core": "386dbd8bf930f169dd43bac7c7719659ee99026d",
-        "CLT": "13.0.0.0.1.1627064638",
+        "CLT": "13.2.0.0.1.1638488800",
         "Xcode": "13.1",
-        "macOS": "12.0"
+        "macOS": "12.1"
       }
     }
   }
