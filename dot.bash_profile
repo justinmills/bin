@@ -194,11 +194,15 @@ export NVM_DIR="$HOME/.nvm"
 initialization_message "Initializing serverless"
 [ -f ~/.config/tabtab/__tabtab.bash ] && . ~/.config/tabtab/__tabtab.bash || true
 
-
 # Python virtualization layer(s)
 # Use pyenv for python env management
 initialization_message "Initializing pyenv"
-eval "$(pyenv init -)"
+if command -v pyenv 1>/dev/null 2>&1; then
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init --path)"
+  eval "$(pyenv init -)"
+fi
 
 # pipenv bash completions
 initialization_message "Initializing pipenv"
