@@ -203,6 +203,10 @@ if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init --path)"
   eval "$(pyenv init -)"
 fi
+# Brew installs in a new location, so let's update the flags env vars.
+export LDFLAGS="${LDFLAGS} -L/opt/homebrew/Cellar/unixodbc/2.3.9_1/lib"
+export CPPFLAGS="${CPPFLAGS} -I/opt/homebrew/Cellar/unixodbc/2.3.9_1/include"
+
 
 # pipenv bash completions
 # cannot enable this until this issue is resolved: 
