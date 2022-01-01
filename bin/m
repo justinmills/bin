@@ -7,4 +7,5 @@
 # /Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n $@
 # /Applications/Emacs-24.5-1.app/Contents/MacOS/bin/emacsclient -n $@
 # Spacemacs!
-/usr/local/bin/emacsclient -n $@
+# /usr/local/bin/emacsclient -n $@
+$(brew --prefix)/bin/emacsclient -n $@
