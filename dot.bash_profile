@@ -53,6 +53,8 @@ function explorer {
 alias aws-prod="saml2aws console -a prod && saml2aws login -a prod"
 alias aws-feature="saml2aws console -a feature && saml2aws login -a feature"
 
+alias rptw="./run.sh pytest -s -vv --looponfail"
+
 # ------------------------------------------------------------------------------
 # JAVA...
 
@@ -147,7 +149,6 @@ fi
 
 # Tell Homebrew not to auto-update anytime you run a brew install command
 export HOMEBREW_NO_AUTO_UPDATE=1
-
 # Tell mac tar to not put the garbage in tarballs that messes with real unix systems.
 # http://www.unwin.org/solr_error_in_opening_zip_file.html
 export COPYFILE_DISABLE=true
@@ -187,8 +188,8 @@ test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shel
 # NVM manage multiple versions of node/nvm.
 initialization_message "Initializing nvm"
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # This is for serverless tab completion
 initialization_message "Initializing serverless"
