@@ -1,0 +1,27 @@
+#! /bin/bash
+
+# Run a command in each directory
+
+
+GIT_ONLY=1
+
+CURRENT_BRANCH_COMMAND="git rev-parse --abbrev-ref HEAD"
+
+
+for dir in ./* ; do
+    if [ -d "$dir" ] ; then
+        echo "Descending into $dir"
+        (
+            cd "$dir"
+            if [ $GIT_ONLY == 1 ] && [ ! -d "./.git" ] ; then
+                echo -e "\tSkipping $dir - it is not a git repository"
+            else
+                echo -e "\tRunning $@"
+                "$@"
+            fi
+        )
+    else
+        echo "Skipping $dir, it is not a directory"
+    fi
+    echo
+done
