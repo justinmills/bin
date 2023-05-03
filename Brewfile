@@ -21,6 +21,7 @@ brew "watch"
 brew "pstree"
 # For cli MFA support
 brew "oath-toolkit"
+brew "wget"
 
 # Virtual envs
 brew "nvm"
@@ -35,27 +36,37 @@ brew "d12frosted/emacs-plus/emacs-plus@28", args: ["with-spacemacs-icon"], link:
 
 # Font required by spacemacs
 tap "homebrew/cask-fonts"
-brew "svn"  # This font requires svn...on my
+brew "svn"  # This font requires svn...oh my
 cask "font-source-code-pro"
 
 
 # Databases
 brew "sqlite"
-brew "freetds"
-brew "mongocli"
-brew "mongosh"
-brew "mysql"
-brew "mysql-client"
-brew "postgresql"
-brew "unixodbc"
-tap "microsoft/mssql-release"
-brew "microsoft/mssql-release/msodbcsql17"
-brew "microsoft/mssql-release/mssql-tools"
+#brew "freetds"
+#brew "mongocli"
+#brew "mongosh"
+#brew "mysql"
+#brew "mysql-client"
+#brew "postgresql"
+#brew "unixodbc"
+#tap "microsoft/mssql-release"
+#brew "microsoft/mssql-release/msodbcsql17"
+#brew "microsoft/mssql-release/mssql-tools"
 
 # For Terraform
-tap "hashicorp/tap"
-brew "tfenv"
+#tap "hashicorp/tap"
+#brew "tfenv"
 
 # Authing into AWS via jumpcloud
-brew "saml2aws"
+#brew "saml2aws"
 
+# For manipulating images (mostly used on my home machine)
+brew "imagemagick"
+brew "exiftool"
+
+# GitHub cli:
+brew "gh"
+
+# 1Password CLI
+tap "1password/tap"
+cask "1password-cli"
