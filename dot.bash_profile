@@ -214,3 +214,10 @@ export CPPFLAGS="${CPPFLAGS} -I/opt/homebrew/Cellar/unixodbc/2.3.9_1/include"
 # https://github.com/pypa/pipenv/issues/4872
 # initialization_message "Initializing pipenv"
 # eval "$(_PIPENV_COMPLETE=bash_source pipenv)"
+
+# GitHub CLI 1Password integration
+if [ -f ~/.config/op/plugins.sh ]
+then
+    source /Users/justinmills/.config/op/plugins.sh
+fi
+
