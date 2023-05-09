@@ -58,8 +58,11 @@ alias rptw="./run.sh pytest -s -vv --looponfail"
 # ------------------------------------------------------------------------------
 # JAVA...
 
-export JAVA_HOME="$(/usr/libexec/java_home)"
-
+if /usr/libexec/java_home --failfast 2> /dev/null
+then
+    initialization_message "Initializing Java"
+    export JAVA_HOME="$(/usr/libexec/java_home)"
+fi
 # ------------------------------------------------------------------------------
 # Postgres (need this to be able to use psql to connect to a docker running pg instance)
 
@@ -172,7 +175,7 @@ fi
 
 # ------------------------------------------------------------------------------
 # Done..with everything that isn't wired in via third party...
-initialization_message "Done with .bashrc, onto 3rd party add-ons"
+# initialization_message "Done with .bashrc, onto 3rd party add-ons"
 
 # ------------------------------------------------------------------------------
 # 3rd party add-ons. These are generally tacked on by the app in question...
@@ -218,6 +221,14 @@ export CPPFLAGS="${CPPFLAGS} -I/opt/homebrew/Cellar/unixodbc/2.3.9_1/include"
 # GitHub CLI 1Password integration
 if [ -f ~/.config/op/plugins.sh ]
 then
+    initialization_message "Initializing GitHub CLI"
     source /Users/justinmills/.config/op/plugins.sh
+fi
+
+# Poetry completions
+if command -v poetry > /dev/null
+then
+    initialization_message "Initializing Poetry"
+    eval "$(poetry completions bash)"
 fi
 
