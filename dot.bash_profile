@@ -1,7 +1,27 @@
-#! /bin/bash
+#! -*- shell-script -*-
+
+# ------------------------------------------------------------------------------
+# My .bash_profile
+#
+# See also, my .bashrc file (some duplicative stuff most likely)
+
+# No need to export some of these, we only need them here.
+
+IS_INTERACTIVE=false
+if [ "$TERM" != dumb ] ; then
+    IS_INTERACTIVE=true
+fi
+
+IS_WINDOWS=false
+if [ "$(uname)" = CYGWIN* ] ; then
+    IS_WINDOWS=true
+fi
+
+# ------------------------------------------------------------------------------
+# Some helper functions we'll use in here only (mostly likely)
 
 function initialization_message {
-    if [ $TERM != dumb ] ; then
+    if [ "$IS_INTERACTIVE" = true ] ; then
         echo "$@"
     else
         # Do nothing
@@ -9,128 +29,124 @@ function initialization_message {
     fi
 }
 
-initialization_message "Starting initialization..."
-
-IS_WINDOWS=false
-if [[ "$(uname)" = CYGWIN* ]] ; then
-    IS_WINDOWS=true
-fi
+initialization_message "Loading .bash_profile..."
 
 # ------------------------------------------------------------------------------
-# Helpful functions
+# Some functions I find useful
+#
+# Many of these I've replaced with custom scripts in my ~/bin directory
+#
 
-function firefox {
-    open /Applications/Firefox.app $@
-}
+if [ "$IS_INTERACTIVE" = true ] ; then
 
-function chrome {
-    open /Applications/Google\ Chrome.app --args $@
-}
+    initialization_message "  -Functions"
 
-function incognito {
-    /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --incognito $@
-}
+    function firefox {
+        open /Applications/Firefox.app $@
+    }
 
-function pass {
-  security find-generic-password -l "$1" -g 2>&1 | grep "^password:" | sed 's/password: "//g' | sed 's/"//g'
-}
+    function chrome {
+        open /Applications/Google\ Chrome.app --args $@
+    }
 
-function explorer {
-    app=~/"Applications (Parallels)/{fb9f7cda-07b6-4948-b17d-66e23c3661ae} Applications.localized/File Explorer.app"
-    if [ "$@" = . ] ; then
-        open "${app}" --args $PWD
-    else
-        open "${app}" --args $@
-    fi
-}
+    function incognito {
+        /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --incognito $@
+    }
+
+    function pass {
+        security find-generic-password -l "$1" -g 2>&1 | grep "^password:" | sed 's/password: "//g' | sed 's/"//g'
+    }
+
+    function explorer {
+        app=~/"Applications (Parallels)/{fb9f7cda-07b6-4948-b17d-66e23c3661ae} Applications.localized/File Explorer.app"
+        if [ "$@" = . ] ; then
+            open "${app}" --args $PWD
+        else
+            open "${app}" --args $@
+        fi
+    }
+
+fi
 
 # ------------------------------------------------------------------------------
 # Aliases
 
-# alias foo="git status"
+if [ "$IS_INTERACTIVE" = true ] ; then
 
-# Relies on saml2aws setup
-alias aws-prod="saml2aws console -a prod && saml2aws login -a prod"
-alias aws-feature="saml2aws console -a feature && saml2aws login -a feature"
+    initialization_message "  -Aliases"
 
-alias rptw="./run.sh pytest -s -vv --looponfail"
+    # alias foo="git status"
 
-# ------------------------------------------------------------------------------
-# JAVA...
+    # Relies on saml2aws setup
+    # alias aws-prod="saml2aws console -a prod && saml2aws login -a prod"
+    # alias aws-feature="saml2aws console -a feature && saml2aws login -a feature"
 
-if /usr/libexec/java_home --failfast 2> /dev/null
-then
-    initialization_message "Initializing Java"
-    export JAVA_HOME="$(/usr/libexec/java_home)"
+    # alias rptw="./run.sh pytest -s -vv --looponfail"
+
 fi
-# ------------------------------------------------------------------------------
-# Postgres (need this to be able to use psql to connect to a docker running pg instance)
-
-# export PGHOST=127.0.0.1
-# export PGUSER=diesel
-
-# Building the python psycopg library doesn't work with brew ssl for some reason out of the box.
-# Need to specify some additional args
-export LDFLAGS="${LDFLAGS} -I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib"
-
-# ------------------------------------------------------------------------------
-# Editor
-
-# This is a script I keep in bin. Basically a wrapper around emacsclient
-export EDITOR=emacsclient
 
 # ------------------------------------------------------------------------------
 # Path setup
 
-sep=:
-if  $IS_WINDOWS ; then
-    sep=;
+initialization_message "  -Path"
+export PATH_SEP=:
+if [ "$IS_WINDOWS" = true ] ; then
+    PATH_SEP=;
 fi
 function add-to-path {
-  export PATH="${1}${sep}${PATH}"
+    export PATH="${1}${PATH_SEP}${PATH}"
 }
 
-if $IS_WINDOWS ; then
+# Save off the path for safe keeping
+export OS_PATH="$PATH"
+
+if [ "$IS_WINDOWS" = true ] ; then
     # TODO: set a default path?
-    true
+    :
 else
-    # Setup Homebrew path - let it do it for us...
+    # Let Homebrew setup the basic bits of the path (It will only prepend to the
+    # current path.)
     eval "$(/opt/homebrew/bin/brew shellenv)"
-    # export PATH_BREW=/usr/local/bin:/usr/local/sbin
-    # export PATH_OS=/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin
-    # export PATH=${PATH_BREW}:${PATH_OS}
 fi
+
+# Add some of my stuff
 add-to-path ~/bin-private
 add-to-path ~/bin
-add-to-path /Applications/Emacs.app/Contents/MaxOS/bin
-add-to-path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-# Elastic Beanstalk CLI
-# (https://github.com/aws/aws-elastic-beanstalk-cli-setup)
-add-to-path ~/.ebcli-virtual-env/executables
 
-if [ -e ~/code/ellevation/main/tools/bin ] ; then
-    add-to-path ~/code/ellevation/main/tools/bin
-fi
+# VS Code
+add-to-path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
 # This is where pipx puts things
 add-to-path ~/.local/bin
 
-# ------------------------------------------------------------------------------
-# Completions
+# Elastic Beanstalk CLI
+# (https://github.com/aws/aws-elastic-beanstalk-cli-setup)
+# add-to-path ~/.ebcli-virtual-env/executables
 
-# Bash completions. I use homebrew for this now, so much of this is legacy or for macports.
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-    initialization_message "Initializing bash completions"
-    . $(brew --prefix)/etc/bash_completion
+# If my job has tools
+if [ -e ~/code/job/main/tools/bin ] ; then
+    add-to-path ~/code/job/main/tools/bin
 fi
-# Completions for screen wrapper
-complete -F _known_hosts scr
+
+# ------------------------------------------------------------------------------
+# Completions (not all of them, just mine and homebrew ones)
+
+if [ "$IS_INTERACTIVE" = true ] ; then
+    initialization_message "  -Bash Completions"
+
+    # Homebrew completions
+    [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+
+    # Completions for screen wrapper (complete with hosts in known_hosts)
+    complete -F _known_hosts scr
+
+fi  # interactive? install completions
+
 
 # ------------------------------------------------------------------------------
 # PS1 prompt
 
-# Setup prompt
-if [ $TERM != dumb ] ; then
+if [ "$IS_INTERACTIVE" = true ] ; then
     #PS1='\h:\W$(__git_ps1 "(%s)") \u\$ '
 
     # Tried this, but it seemed to break
@@ -144,14 +160,18 @@ else
     #PS1='\s-\v\$ '
 
     # Also for git on dumb terms, less is not a good thing...use cat instead
-    export PAGER=cat
+    # Not sure why this is in here or if I still need it...right now PAGER is
+    # unset so I'm guessing it defaults to less? Still, gonna axe this for now
+    # and bring it back if I need it.
+    # export PAGER=cat
 fi
 
 # ------------------------------------------------------------------------------
-# Misc settings
+# Misc exports to control behavior of various things
 
 # Tell Homebrew not to auto-update anytime you run a brew install command
 export HOMEBREW_NO_AUTO_UPDATE=1
+
 # Tell mac tar to not put the garbage in tarballs that messes with real unix systems.
 # http://www.unwin.org/solr_error_in_opening_zip_file.html
 export COPYFILE_DISABLE=true
@@ -160,11 +180,40 @@ export COPYFILE_DISABLE=true
 # http://askubuntu.com/questions/80371/bash-history-handling-with-multiple-terminals
 export PROMPT_COMMAND_HISTORY='history -a'
 
-# Before we get too far, let's set PROMPT_COMMAND as others set it below
+# Before we get too far, let's set PROMPT_COMMAND as others may set it below
 export PROMPT_COMMAND="${PROMPT_COMMAND_HISTORY}"
 
-# If there is a file with myget creds, let's source it. Kinda evil to have these floating around,
-# but better than littering each repo with a .env file with the creds in them, IMO.
+# Java
+
+if /usr/libexec/java_home --failfast 2> /dev/null
+then
+    initialization_message "  -Initializing Java"
+    export JAVA_HOME="$(/usr/libexec/java_home)"
+fi
+
+# Postgres (need this to be able to use psql to connect to a docker running pg
+# instance)
+# export PGHOST=127.0.0.1
+# export PGUSER=diesel
+
+# Building the python psycopg library doesn't work with brew ssl for some reason
+# out of the box. Need to specify some additional args
+export LDFLAGS="${LDFLAGS} -I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib"
+
+# Editor
+# At times I've set this to a script I keep in bin, but for the most part, emacs
+# is running, so no need
+export EDITOR=emacsclient
+
+# Silence the MacOS bash is replaced with zsh message
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
+# ------------------------------------------------------------------------------
+# Misc other sourcing
+
+# If there is a file with myget creds, let's source it. Kinda evil to have these
+# floating around, but better than littering each repo with a .env file with the
+# creds in them, IMO.
 #
 # Temporarily set -a so they're auto-exported too.
 if [ -f ~/.myget-credentials ] ; then
@@ -173,62 +222,71 @@ if [ -f ~/.myget-credentials ] ; then
     set +a
 fi
 
-# ------------------------------------------------------------------------------
-# Done..with everything that isn't wired in via third party...
-# initialization_message "Done with .bashrc, onto 3rd party add-ons"
-
-# ------------------------------------------------------------------------------
-# 3rd party add-ons. These are generally tacked on by the app in question...
-
 # Direnv, nifty environment loading like rvmrc.
-initialization_message "Initializing direnv"
-eval "$(direnv hook bash)"
+if command -v direnv 1>/dev/null 2>&1
+then
+    initialization_message "  -direnv"
+    eval "$(direnv hook bash)"
+fi
 
 # iTerm shell integration
-initialization_message "Initializing iTerm shell integration"
-test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+if [ -e "${HOME}/.iterm2_shell_integration.bash" ] ; then
+    initialization_message "  -iTerm2 shell integration"
+    source "${HOME}/.iterm2_shell_integration.bash"
+fi
 
 # NVM manage multiple versions of node/nvm.
-initialization_message "Initializing nvm"
 export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-
-# This is for serverless tab completion
-initialization_message "Initializing serverless"
-[ -f ~/.config/tabtab/__tabtab.bash ] && . ~/.config/tabtab/__tabtab.bash || true
-
-# Python virtualization layer(s)
-# Use pyenv for python env management
-initialization_message "Initializing pyenv"
-if command -v pyenv 1>/dev/null 2>&1; then
-  export PYENV_ROOT="$HOME/.pyenv"
-  export PATH="$PYENV_ROOT/bin:$PATH"
-  eval "$(pyenv init --path)"
-  eval "$(pyenv init -)"
+if [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] ; then
+    initialization_message "  -nvm"
+    source "/opt/homebrew/opt/nvm/nvm.sh"
+    if [ "$IS_INTERACTIVE" = true ] && [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] ; then
+        # initialization_message "    -completions"
+        source "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+    fi
 fi
-# Brew installs in a new location, so let's update the flags env vars.
-export LDFLAGS="${LDFLAGS} -L/opt/homebrew/Cellar/unixodbc/2.3.9_1/lib"
-export CPPFLAGS="${CPPFLAGS} -I/opt/homebrew/Cellar/unixodbc/2.3.9_1/include"
 
+# Serverless (completions only)
+if [ "$IS_INTERACTIVE" = true ] && [ -f ~/.config/tabtab/__tabtab.bash ] ; then
+    initialization_message "  -serverless"
+    source ~/.config/tabtab/__tabtab.bash
+fi
 
-# pipenv bash completions
-# cannot enable this until this issue is resolved: 
+# Python pyenv for managing multiple python versions
+if command -v pyenv 1>/dev/null 2>&1; then
+    initialization_message "  -pyenv"
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init --path)"
+    eval "$(pyenv init -)"
+fi
+
+# Update link/compile flags when using unixodbc
+if [ -e /opt/homebrew/Cellar/unixodbc ] ; then
+    initialization_message "  -unixodbc link/compile flags"
+    export LDFLAGS="${LDFLAGS} -L/opt/homebrew/Cellar/unixodbc/2.3.9_1/lib"
+    export CPPFLAGS="${CPPFLAGS} -I/opt/homebrew/Cellar/unixodbc/2.3.9_1/include"
+fi
+
+# pipenv bash completions (disabled in favor of poetry for now)
+# cannot enable this until this issue is resolved:
 # https://github.com/pypa/pipenv/issues/4872
 # initialization_message "Initializing pipenv"
 # eval "$(_PIPENV_COMPLETE=bash_source pipenv)"
 
+# Poetry (python dependency management stuff)
+if command -v poetry 1>/dev/null 2>&1 && [ "$IS_INTERACTIVE" = true ] ; then
+    initialization_message "  -poetry"
+    eval "$(poetry completions bash)"
+fi
+# Set a custom poetry config location
+if [ -f ~/code/personal/config/dot/Library/Preferences/poetry/config.toml ] ; then
+    export POETRY_CONFIG_DIR=~/code/personal/config/dot/Library/Preferences/poetry
+fi
+
 # GitHub CLI 1Password integration
 if [ -f ~/.config/op/plugins.sh ]
 then
-    initialization_message "Initializing GitHub CLI"
+    initialization_message "  -GitHub CLI"
     source /Users/justinmills/.config/op/plugins.sh
 fi
-
-# Poetry completions
-if command -v poetry > /dev/null
-then
-    initialization_message "Initializing Poetry"
-    eval "$(poetry completions bash)"
-fi
-
