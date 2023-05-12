@@ -1,5 +1,8 @@
 #! /bin/bash
 
+# UPDATE: I no longer use this as homebrew installs an emacs bin that's on the path and seems to be
+# working just fine.
+
 # wrapper script to launch emacs correctly on MacOS
 
 # aquamacs=/Applications/Aquamacs.app/Contents/MacOS/Aquamacs
