@@ -16,3 +16,10 @@ this repo is helpful for making sure you have everything you need.
 
     # To install all dependencies
     brew bundle install
+
+##  direnv
+
+I have a [direnvrc](./direnv/direnvrc) script that I link to from
+`~/.config/direnv` to support [poetry](https://python-poetry.org/) layouts in
+python projects.
+
