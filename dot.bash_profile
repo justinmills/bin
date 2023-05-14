@@ -154,8 +154,26 @@ if [ "$IS_INTERACTIVE" = true ] ; then
 
     # This is sam's; he's had luck with it.
     # Green user@host, Blue directory $ (optional git branch info)
-    PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w$(__git_ps1 "\[\033[01;33m\](%s)")\[\033[00m\]$ '
+    # PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w$(__git_ps1 "\[\033[01;33m\](%s)")\[\033[00m\]$ '
+
+    # Trying this one out:
+    # [\e[0m\] clears out previous formatting
+    #
+    # - optional prefix as set by direnv (in light gray 37)
+    #   Direnv doesn't support setting PS1, so use this trick to enable it via env vars
+    #   see: https://github.com/direnv/direnv/wiki/PS1
+    PS1='${DIRENV_PS1:+\[\e[01;37m\]($DIRENV_PS1)\e[0m\]}'
+    # - light yellow (93) History number (\!) in square brackets
+    PS1=$PS1'\[\e[01;93m\][\!]\[\e[0m\]'
+    # - (skipping for now) light red (91) Exit code ($?) in parens
+    # - light green (92) user (\u) followed by colon
+    PS1=$PS1'\[\e[01;92m\]\u:\e[0m\]'
+    # - light blue (94) directory (\w)
+    PS1=$PS1'\[\e[01;94m\]\w\e[0m\]'
+    # - light yellow (93) git PS1 status wrapped in parens
+    PS1=$PS1'$(__git_ps1 "\[\e[01;93m\](%s)")\e[0m\]$ '
 else
+
     PS1='[\w$(__git_ps1 "(git-%s)")]$ '
     #PS1='\s-\v\$ '
 
