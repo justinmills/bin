@@ -106,7 +106,7 @@ if [ "$IS_WINDOWS" = true ] ; then
 else
     # Let Homebrew setup the basic bits of the path (It will only prepend to the
     # current path.)
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+    eval "$(`brew --prefix`/bin/brew shellenv)"
 fi
 
 # Add some of my stuff
