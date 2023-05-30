@@ -170,8 +170,13 @@ if [ "$IS_INTERACTIVE" = true ] ; then
     PS1=$PS1'\[\e[01;92m\]\u:\e[0m\]'
     # - light blue (94) directory (\w)
     PS1=$PS1'\[\e[01;94m\]\w\e[0m\]'
-    # - light yellow (93) git PS1 status wrapped in parens
-    PS1=$PS1'$(__git_ps1 "\[\e[01;93m\](%s)")\e[0m\]$ '
+    #
+    # - light yellow (93) git PS1 status wrapped in parens (if git bash prompt helpers are installed)
+    if [[ $(type -t __git_ps1) == function ]] ; then
+        PS1=$PS1'$(__git_ps1 "\[\e[01;93m\](%s)")\e[0m\]'
+    fi
+    # Lastly...the prompt
+    PS1=$PS1'$ '
 else
 
     PS1='[\w$(__git_ps1 "(git-%s)")]$ '
