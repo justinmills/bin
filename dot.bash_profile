@@ -221,6 +221,10 @@ fi
 # instance)
 # export PGHOST=127.0.0.1
 # export PGUSER=diesel
+# PG no longer puts itself in path...multiple versions I guess.
+if [ -f /opt/homebrew/opt/postgresql@15/bin/psql ] ; then
+    add-to-path /opt/homebrew/opt/postgresql@15/bin
+fi
 
 # Building the python psycopg library doesn't work with brew ssl for some reason
 # out of the box. Need to specify some additional args
