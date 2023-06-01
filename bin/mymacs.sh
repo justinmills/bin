@@ -5,7 +5,7 @@
 cd
 . ./.bash_profile
 
-COMPANY=ellevation
+COMPANY=job
 
 function notify() {
     message="$1"
