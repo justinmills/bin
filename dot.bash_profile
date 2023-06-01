@@ -196,6 +196,7 @@ fi
 
 # Tell Homebrew not to auto-update anytime you run a brew install command
 export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_INSTALL_CLEANUP=1
 
 # Tell mac tar to not put the garbage in tarballs that messes with real unix systems.
 # http://www.unwin.org/solr_error_in_opening_zip_file.html
@@ -210,7 +211,7 @@ export PROMPT_COMMAND="${PROMPT_COMMAND_HISTORY}"
 
 # Java
 
-if /usr/libexec/java_home --failfast 2> /dev/null
+if /usr/libexec/java_home --failfast 1> /dev/null 2>&1
 then
     initialization_message "  -Initializing Java"
     export JAVA_HOME="$(/usr/libexec/java_home)"
