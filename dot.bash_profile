@@ -103,10 +103,12 @@ export OS_PATH="$PATH"
 if [ "$IS_WINDOWS" = true ] ; then
     # TODO: set a default path?
     :
+elif [ -f /opt/homebrew/bin/brew ] ; then
+    # Let homebrew set up our path
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 else
-    # Let Homebrew setup the basic bits of the path (It will only prepend to the
-    # current path.)
-    eval "$(`brew --prefix`/bin/brew shellenv)"
+    # Dunno...at this point, not sure what to add on?
+    :
 fi
 
 # Add some of my stuff
