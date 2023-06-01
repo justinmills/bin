@@ -23,6 +23,10 @@ brew "pstree"
 brew "oath-toolkit"
 brew "wget"
 
+# These prefer install via pkg but this gets around the admin requirements for that?
+brew "awscli"
+brew "openjdk"
+
 # Virtual envs
 brew "nvm"
 brew "pyenv"
@@ -47,17 +51,17 @@ brew "sqlite"
 #brew "mongosh"
 #brew "mysql"
 #brew "mysql-client"
-#brew "postgresql"
+brew "postgresql@15"  # Mostly for psql command line
 #brew "unixodbc"
 #tap "microsoft/mssql-release"
 #brew "microsoft/mssql-release/msodbcsql17"
 #brew "microsoft/mssql-release/mssql-tools"
 
 # For Terraform
-#tap "hashicorp/tap"
-#brew "tfenv"
+tap "hashicorp/tap"
+brew "tfenv"
 
-# Authing into AWS via jumpcloud
+# Authing into AWS via jumpcloud (SSO)
 #brew "saml2aws"
 
 # For manipulating images (mostly used on my home machine)
