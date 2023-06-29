@@ -19,12 +19,16 @@ brew "jq"
 brew "the_silver_searcher"
 brew "watch"
 brew "pstree"
+brew "gnupg"
+brew "wget"
 # For cli MFA support
 brew "oath-toolkit"
-brew "wget"
+# To scan qr codes to get otp secrets
+brew "zbar"
 
 # These prefer install via pkg but this gets around the admin requirements for that?
 brew "awscli"
+brew "amazon-ecs-cli"
 brew "openjdk"
 
 # Virtual envs
