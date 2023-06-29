@@ -82,7 +82,8 @@ if [ "$IS_INTERACTIVE" = true ] ; then
     # alias aws-feature="saml2aws console -a feature && saml2aws login -a feature"
 
     # alias rptw="./run.sh pytest -s -vv --looponfail"
-
+    alias pr='poetry run'
+    alias prp='poetry run poe'
 fi
 
 # ------------------------------------------------------------------------------
@@ -141,6 +142,11 @@ if [ "$IS_INTERACTIVE" = true ] ; then
 
     # Completions for screen wrapper (complete with hosts in known_hosts)
     complete -F _known_hosts scr
+
+    # AWS cli
+    if [ -f "/opt/homebrew/bin/aws_completer" ] ; then
+        complete -C '/opt/homebrew/bin/aws_completer' aws
+    fi
 
 fi  # interactive? install completions
 
