@@ -66,7 +66,7 @@ tap "hashicorp/tap"
 brew "tfenv"
 
 # Authing into AWS via jumpcloud (SSO)
-#brew "saml2aws"
+brew "saml2aws"
 
 # For manipulating images (mostly used on my home machine)
 brew "imagemagick"

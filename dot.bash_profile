@@ -78,6 +78,7 @@ if [ "$IS_INTERACTIVE" = true ] ; then
     # alias foo="git status"
 
     # Relies on saml2aws setup
+    alias aws-dev="saml2aws console -a dev && saml2aws login -a dev"
     # alias aws-prod="saml2aws console -a prod && saml2aws login -a prod"
     # alias aws-feature="saml2aws console -a feature && saml2aws login -a feature"
 
@@ -146,6 +147,12 @@ if [ "$IS_INTERACTIVE" = true ] ; then
     # AWS cli
     if [ -f "/opt/homebrew/bin/aws_completer" ] ; then
         complete -C '/opt/homebrew/bin/aws_completer' aws
+    fi
+
+    # saml2aws
+    if command -v saml2aws 1>/dev/null 2>&1
+    then
+        eval "$(saml2aws --completion-script-bash)"
     fi
 
 fi  # interactive? install completions
