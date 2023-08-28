@@ -21,6 +21,7 @@ brew "watch"
 brew "pstree"
 brew "gnupg"
 brew "wget"
+brew "telnet"
 # For cli MFA support
 brew "oath-toolkit"
 # To scan qr codes to get otp secrets
