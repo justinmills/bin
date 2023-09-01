@@ -22,6 +22,8 @@ brew "pstree"
 # For cli MFA support
 brew "oath-toolkit"
 brew "wget"
+# To manage bluetooth "things"
+brew "blueutil"
 
 # These prefer install via pkg but this gets around the admin requirements for that?
 brew "awscli"
