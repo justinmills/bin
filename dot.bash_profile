@@ -81,10 +81,14 @@ if [ "$IS_INTERACTIVE" = true ] ; then
     alias aws-dev="saml2aws console -a dev && saml2aws login -a dev"
     # alias aws-prod="saml2aws console -a prod && saml2aws login -a prod"
     # alias aws-feature="saml2aws console -a feature && saml2aws login -a feature"
+    alias aws-dev="export AWS_PROFILE=dev AWS_REGION=us-east-1 && aws configure list &> /dev/null || aws sso login"
+    alias aws-prod="export AWS_PROFILE=prod AWS_REGION=us-east-1 && aws configure list &> /dev/null || aws sso login"
 
     # alias rptw="./run.sh pytest -s -vv --looponfail"
     alias pr='poetry run'
     alias prp='poetry run poe'
+
+
 fi
 
 # ------------------------------------------------------------------------------
