@@ -16,6 +16,7 @@ brew "direnv"
 brew "dos2unix"
 brew "git"
 brew "jq"
+brew "yq" # like jq, but for yaml
 brew "the_silver_searcher"
 brew "watch"
 brew "pstree"
@@ -42,6 +43,14 @@ tap "d12frosted/emacs-plus"
 brew "d12frosted/emacs-plus/emacs-plus@28", args: ["with-spacemacs-icon"], link: true
 # There is more instructions in the output, so you've got to do the following:
 #   ln -s /opt/homebrew/opt/emacs-plus@28/Emacs.app /Applications
+
+# Support for emacs things
+# sql-mode (go to compile the sql formatter)
+brew "ruby"
+brew "go"
+brew "goreleaser"
+# ispell
+brew "ispell"
 
 # Font required by spacemacs
 tap "homebrew/cask-fonts"

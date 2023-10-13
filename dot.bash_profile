@@ -136,6 +136,17 @@ if [ -e ~/code/job/main/tools/bin ] ; then
     add-to-path ~/code/job/main/tools/bin
 fi
 
+# If we installed ruby
+if [ -d /opt/homebrew/opt/ruby/bin ] ; then
+    add-to-path /opt/homebrew/opt/ruby/bin
+fi
+
+# For my sql emacs layer - to format sql code...had to jump through some hoops to get this installed
+# on my work laptop, but finally got it.
+if [ -e ~/code/misc/sqlfmt/backend/dist/sqlfmt_darwin_amd64_v1/sqlfmt ] ; then
+    add-to-path ~/code/misc/sqlfmt/backend/dist/sqlfmt_darwin_amd64_v1/
+fi
+
 # ------------------------------------------------------------------------------
 # Completions (not all of them, just mine and homebrew ones)
 
