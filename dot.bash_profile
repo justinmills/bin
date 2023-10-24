@@ -78,11 +78,17 @@ if [ "$IS_INTERACTIVE" = true ] ; then
     # alias foo="git status"
 
     # Relies on saml2aws setup
-    alias aws-dev="saml2aws console -a dev && saml2aws login -a dev"
+    # alias aws-dev="saml2aws console -a dev && saml2aws login -a dev"
     # alias aws-prod="saml2aws console -a prod && saml2aws login -a prod"
     # alias aws-feature="saml2aws console -a feature && saml2aws login -a feature"
+    alias aws-unset="unset AWS_PROFILE AWS_REGION"
     alias aws-dev="export AWS_PROFILE=dev AWS_REGION=us-east-1 && aws configure list &> /dev/null || aws sso login"
     alias aws-prod="export AWS_PROFILE=prod AWS_REGION=us-east-1 && aws configure list &> /dev/null || aws sso login"
+    alias aws-?="echo AWS_PROFILE=${AWS_PROFILE:-unset}"
+
+    # wireguard vpn
+    alias vpn-up="wg-quick up wg0"
+    alias vpn-down="wg-quick down wg0"
 
     # alias rptw="./run.sh pytest -s -vv --looponfail"
     alias pr='poetry run'
