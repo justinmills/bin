@@ -83,6 +83,7 @@ if [ "$IS_INTERACTIVE" = true ] ; then
     # alias aws-feature="saml2aws console -a feature && saml2aws login -a feature"
     alias aws-unset="unset AWS_PROFILE AWS_REGION"
     alias aws-dev="export AWS_PROFILE=dev AWS_REGION=us-east-1 && aws configure list &> /dev/null || aws sso login"
+    alias aws-qa="export AWS_PROFILE=qa AWS_REGION=us-east-1 && aws configure list &> /dev/null || aws sso login"
     alias aws-prod="export AWS_PROFILE=prod AWS_REGION=us-east-1 && aws configure list &> /dev/null || aws sso login"
     alias aws-?="echo AWS_PROFILE=${AWS_PROFILE:-unset}"
 
@@ -211,6 +212,11 @@ if [ "$IS_INTERACTIVE" = true ] ; then
     # - light yellow (93) git PS1 status wrapped in parens (if git bash prompt helpers are installed)
     if [[ $(type -t __git_ps1) == function ]] ; then
         PS1=$PS1'$(__git_ps1 "\[\e[01;93m\](%s)")\[\e[0m\]'
+    fi
+    # VSCode doesn't need quite all of this given it already shows a lot of context. So let's
+    # simplify it a bit. Only a few things from above
+    if [ "$TERM_PROGRAM" = vscode ]  ; then
+        PS1='${DIRENV_PS1:+\[\e[01;37m\]($DIRENV_PS1)\e[0m\]}'
     fi
     # Lastly...the prompt
     PS1=$PS1'$ '
