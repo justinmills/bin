@@ -352,10 +352,6 @@ if command -v poetry 1>/dev/null 2>&1 && [ "$IS_INTERACTIVE" = true ] ; then
     initialization_message "  -poetry"
     eval "$(poetry completions bash)"
 fi
-# Set a custom poetry config location
-if [ -f ~/code/personal/config/dot/Library/Preferences/poetry/config.toml ] ; then
-    export POETRY_CONFIG_DIR=~/code/personal/config/dot/Library/Preferences/poetry
-fi
 
 # GitHub CLI 1Password integration
 if [ -f ~/.config/op/plugins.sh ]
