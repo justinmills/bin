@@ -13,11 +13,11 @@ echo "Changing to main, pulling latest changes and cleaning up ${BRANCH}"
 # Waymark tweak: most of the time I'm doing this for branches against dev/develop, so use those if
 # they exist, otherwise fall back to main
 BASE_BRANCH=main
-if git rev-parse --verify origin/develop >/dev/null 2>&1 ; then
+if git rev-parse --verify develop >/dev/null 2>&1 ; then
     BASE_BRANCH=develop
-elif git rev-parse --verify origin/dev >/dev/null 2>&1 ; then
+elif git rev-parse --verify dev >/dev/null 2>&1 ; then
     BASE_BRANCH=dev
-elif git rev-parse --verify origin/master >/dev/null 2>&1 ; then
+elif git rev-parse --verify master >/dev/null 2>&1 ; then
     # Not all of us got the memo :/
     BASE_BRANCH=master
 fi

@@ -78,13 +78,24 @@ if [ "$IS_INTERACTIVE" = true ] ; then
     # alias foo="git status"
 
     # Relies on saml2aws setup
-    alias aws-dev="saml2aws console -a dev && saml2aws login -a dev"
+    # alias aws-dev="saml2aws console -a dev && saml2aws login -a dev"
     # alias aws-prod="saml2aws console -a prod && saml2aws login -a prod"
     # alias aws-feature="saml2aws console -a feature && saml2aws login -a feature"
+    alias aws-unset="unset AWS_PROFILE AWS_REGION"
+    alias aws-dev="export AWS_PROFILE=dev AWS_REGION=us-east-1 && aws configure list &> /dev/null || aws sso login"
+    alias aws-qa="export AWS_PROFILE=qa AWS_REGION=us-east-1 && aws configure list &> /dev/null || aws sso login"
+    alias aws-prod="export AWS_PROFILE=prod AWS_REGION=us-east-1 && aws configure list &> /dev/null || aws sso login"
+    alias aws-?="echo AWS_PROFILE=${AWS_PROFILE:-unset}"
+
+    # wireguard vpn
+    alias vpn-up="wg-quick up wg0"
+    alias vpn-down="wg-quick down wg0"
 
     # alias rptw="./run.sh pytest -s -vv --looponfail"
     alias pr='poetry run'
     alias prp='poetry run poe'
+
+
 fi
 
 # ------------------------------------------------------------------------------
@@ -132,8 +143,16 @@ if [ -e ~/code/job/main/tools/bin ] ; then
     add-to-path ~/code/job/main/tools/bin
 fi
 
-# sql formatting
-if [ -d ~/code/thirdparty/sqlfmt/bin ] ; then
+# If we installed ruby
+if [ -d /opt/homebrew/opt/ruby/bin ] ; then
+    add-to-path /opt/homebrew/opt/ruby/bin
+fi
+
+# For my sql emacs layer - to format sql code...had to jump through some hoops to get this installed
+# on my work laptop, but finally got it. First location is my work computer, second, personal
+if [ -e ~/code/misc/sqlfmt/backend/dist/sqlfmt_darwin_amd64_v1/sqlfmt ] ; then
+    add-to-path ~/code/misc/sqlfmt/backend/dist/sqlfmt_darwin_amd64_v1/
+elif [ -d ~/code/thirdparty/sqlfmt/bin ] ; then
     add-to-path ~/code/thirdparty/sqlfmt/bin
 fi
 
@@ -195,6 +214,11 @@ if [ "$IS_INTERACTIVE" = true ] ; then
     # - light yellow (93) git PS1 status wrapped in parens (if git bash prompt helpers are installed)
     if [[ $(type -t __git_ps1) == function ]] ; then
         PS1=$PS1'$(__git_ps1 "\[\e[01;93m\](%s)")\[\e[0m\]'
+    fi
+    # VSCode doesn't need quite all of this given it already shows a lot of context. So let's
+    # simplify it a bit. Only a few things from above
+    if [ "$TERM_PROGRAM" = vscode ]  ; then
+        PS1='${DIRENV_PS1:+\[\e[01;37m\]($DIRENV_PS1)\e[0m\]}'
     fi
     # Lastly...the prompt
     PS1=$PS1'$ '
