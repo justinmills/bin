@@ -19,14 +19,20 @@ brew "jq"
 brew "the_silver_searcher"
 brew "watch"
 brew "pstree"
+brew "gnupg"
+brew "wget"
+brew "telnet"
 # For cli MFA support
 brew "oath-toolkit"
 brew "wget"
 # To manage bluetooth "things"
 brew "blueutil"
+# To scan qr codes to get otp secrets
+brew "zbar"
 
 # These prefer install via pkg but this gets around the admin requirements for that?
 brew "awscli"
+brew "amazon-ecs-cli"
 brew "openjdk"
 
 # Virtual envs
@@ -64,7 +70,7 @@ tap "hashicorp/tap"
 brew "tfenv"
 
 # Authing into AWS via jumpcloud (SSO)
-#brew "saml2aws"
+brew "saml2aws"
 
 # For manipulating images (mostly used on my home machine)
 brew "imagemagick"

@@ -78,11 +78,13 @@ if [ "$IS_INTERACTIVE" = true ] ; then
     # alias foo="git status"
 
     # Relies on saml2aws setup
+    alias aws-dev="saml2aws console -a dev && saml2aws login -a dev"
     # alias aws-prod="saml2aws console -a prod && saml2aws login -a prod"
     # alias aws-feature="saml2aws console -a feature && saml2aws login -a feature"
 
     # alias rptw="./run.sh pytest -s -vv --looponfail"
-
+    alias pr='poetry run'
+    alias prp='poetry run poe'
 fi
 
 # ------------------------------------------------------------------------------
@@ -130,6 +132,11 @@ if [ -e ~/code/job/main/tools/bin ] ; then
     add-to-path ~/code/job/main/tools/bin
 fi
 
+# sql formatting
+if [ -d ~/code/thirdparty/sqlfmt/bin ] ; then
+    add-to-path ~/code/thirdparty/sqlfmt/bin
+fi
+
 # ------------------------------------------------------------------------------
 # Completions (not all of them, just mine and homebrew ones)
 
@@ -141,6 +148,17 @@ if [ "$IS_INTERACTIVE" = true ] ; then
 
     # Completions for screen wrapper (complete with hosts in known_hosts)
     complete -F _known_hosts scr
+
+    # AWS cli
+    if [ -f "/opt/homebrew/bin/aws_completer" ] ; then
+        complete -C '/opt/homebrew/bin/aws_completer' aws
+    fi
+
+    # saml2aws
+    if command -v saml2aws 1>/dev/null 2>&1
+    then
+        eval "$(saml2aws --completion-script-bash)"
+    fi
 
 fi  # interactive? install completions
 
@@ -160,6 +178,7 @@ if [ "$IS_INTERACTIVE" = true ] ; then
 
     # Trying this one out:
     # [\e[0m\] clears out previous formatting
+    # Any non-printable codes (color/formatting) must be wrapped in \[ and \]
     #
     # - optional prefix as set by direnv (in light gray 37)
     #   Direnv doesn't support setting PS1, so use this trick to enable it via env vars
@@ -169,13 +188,13 @@ if [ "$IS_INTERACTIVE" = true ] ; then
     PS1=$PS1'\[\e[01;93m\][\!]\[\e[0m\]'
     # - (skipping for now) light red (91) Exit code ($?) in parens
     # - light green (92) user (\u) followed by colon
-    PS1=$PS1'\[\e[01;92m\]\u:\e[0m\]'
+    PS1=$PS1'\[\e[01;92m\]\u:\[\e[0m\]'
     # - light blue (94) directory (\w)
-    PS1=$PS1'\[\e[01;94m\]\w\e[0m\]'
+    PS1=$PS1'\[\e[01;94m\]\w\[\e[0m\]'
     #
     # - light yellow (93) git PS1 status wrapped in parens (if git bash prompt helpers are installed)
     if [[ $(type -t __git_ps1) == function ]] ; then
-        PS1=$PS1'$(__git_ps1 "\[\e[01;93m\](%s)")\e[0m\]'
+        PS1=$PS1'$(__git_ps1 "\[\e[01;93m\](%s)")\[\e[0m\]'
     fi
     # Lastly...the prompt
     PS1=$PS1'$ '

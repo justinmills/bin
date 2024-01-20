@@ -10,7 +10,19 @@ BRANCH="$(git branch | grep "^*" | awk '{print $2}')"
 
 echo "Changing to main, pulling latest changes and cleaning up ${BRANCH}"
 
-git checkout main
+# Waymark tweak: most of the time I'm doing this for branches against dev/develop, so use those if
+# they exist, otherwise fall back to main
+BASE_BRANCH=main
+if git rev-parse --verify origin/develop >/dev/null 2>&1 ; then
+    BASE_BRANCH=develop
+elif git rev-parse --verify origin/dev >/dev/null 2>&1 ; then
+    BASE_BRANCH=dev
+elif git rev-parse --verify origin/master >/dev/null 2>&1 ; then
+    # Not all of us got the memo :/
+    BASE_BRANCH=master
+fi
+
+git checkout "$BASE_BRANCH"
 git pull
 git branch -D "${BRANCH}"
 if [[ "$BRANCH" = *-squash ]] ; then
