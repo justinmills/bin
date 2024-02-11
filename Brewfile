@@ -79,7 +79,7 @@ tap "hashicorp/tap"
 brew "tfenv"
 
 # Authing into AWS via jumpcloud (SSO)
-brew "saml2aws"
+# brew "saml2aws"
 
 # For manipulating images (mostly used on my home machine)
 brew "imagemagick"
@@ -91,3 +91,6 @@ brew "gh"
 # 1Password CLI
 tap "1password/tap"
 cask "1password-cli"
+
+# For viewing markdown files
+cask "qlmarkdown"
