@@ -85,7 +85,9 @@ if [ "$IS_INTERACTIVE" = true ] ; then
     alias aws-dev="export AWS_PROFILE=dev AWS_REGION=us-east-1 && aws configure list &> /dev/null || aws sso login"
     alias aws-qa="export AWS_PROFILE=qa AWS_REGION=us-east-1 && aws configure list &> /dev/null || aws sso login"
     alias aws-prod="export AWS_PROFILE=prod AWS_REGION=us-east-1 && aws configure list &> /dev/null || aws sso login"
-    alias aws-?="echo AWS_PROFILE=${AWS_PROFILE:-unset}"
+    alias aws-tools="export AWS_PROFILE=tools AWS_REGION=us-east-1 && aws configure list &> /dev/null || aws sso login"
+    alias aws-stage="export AWS_PROFILE=stage AWS_REGION=us-east-1 && aws configure list &> /dev/null || aws sso login"
+    alias aws-?='echo AWS_PROFILE=${AWS_PROFILE:-unset}'
 
     # wireguard vpn
     alias vpn-up="wg-quick up wg0"
@@ -218,7 +220,7 @@ if [ "$IS_INTERACTIVE" = true ] ; then
     # VSCode doesn't need quite all of this given it already shows a lot of context. So let's
     # simplify it a bit. Only a few things from above
     if [ "$TERM_PROGRAM" = vscode ]  ; then
-        PS1='${DIRENV_PS1:+\[\e[01;37m\]($DIRENV_PS1)\e[0m\]}'
+        PS1='${DIRENV_PS1:+($DIRENV_PS1)}'
     fi
     # Lastly...the prompt
     PS1=$PS1'$ '
@@ -329,8 +331,9 @@ fi
 if command -v pyenv 1>/dev/null 2>&1; then
     initialization_message "  -pyenv"
     export PYENV_ROOT="$HOME/.pyenv"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init --path)"
+    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+    # This is no longer recommended apparently?
+    # eval "$(pyenv init --path)"
     eval "$(pyenv init -)"
 fi
 
