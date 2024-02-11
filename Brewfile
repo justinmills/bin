@@ -11,7 +11,7 @@
 # diff it against this one.
 
 # My usual list
-brew "bash-completion"
+brew "bash-completion2"
 brew "direnv"
 brew "dos2unix"
 brew "git"
