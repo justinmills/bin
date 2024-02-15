@@ -188,39 +188,58 @@ fi  # interactive? install completions
 # PS1 prompt
 
 if [ "$IS_INTERACTIVE" = true ] ; then
-    #PS1='\h:\W$(__git_ps1 "(%s)") \u\$ '
+    BLACK=$(tput setaf 0)
+    RED=$(tput setaf 1)
+    GREEN=$(tput setaf 2)
+    YELLOW=$(tput setaf 3)
+    BROWN=$(tput setaf 3)
+    BLUE=$(tput setaf 4)
+    PURPLE=$(tput setaf 5)
+    CYAN=$(tput setaf 6)
+    GREY=$(tput setaf 7)
 
-    # Tried this, but it seemed to break
-    #PS1='[\e[1;33m\w\e[m\e[3;32m$(__git_ps1 "(git-%s)")\e[m]$ '
+    MY_GREEN=$(tput setaf 10)
+    MY_YELLOW=$(tput setaf 11)
+    MY_BLUE=$(tput setaf 39)
+    MY_RED=$(tput setaf 209)
+    MY_GREY=$(tput setaf 247)
 
-    # This is sam's; he's had luck with it.
-    # Green user@host, Blue directory $ (optional git branch info)
-    # PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w$(__git_ps1 "\[\033[01;33m\](%s)")\[\033[00m\]$ '
 
-    # Trying this one out:
+    BOLD=$(tput bold)
+    DIM=$(tput dim)
+    ITALIC=$(tput sitm)
+    UNDERSCORE=$(tput smul)
+    # No strikethrough on iTerm
+    # STRIKE=$(tput smxx)
+
+    RESET=$(tput sgr0)
+
+    # Here's some older instructions prior to discovering tput:
     # [\e[0m\] clears out previous formatting
     # Any non-printable codes (color/formatting) must be wrapped in \[ and \]
     #
     # - optional prefix as set by direnv (in light gray 37)
     #   Direnv doesn't support setting PS1, so use this trick to enable it via env vars
     #   see: https://github.com/direnv/direnv/wiki/PS1
-    PS1='${DIRENV_PS1:+\[\e[01;37m\]($DIRENV_PS1)\e[0m\]}'
+    PS1='${DIRENV_PS1:+\[$GREY\]($DIRENV_PS1)\[$RESET\]}'
     # - light yellow (93) History number (\!) in square brackets
-    PS1=$PS1'\[\e[01;93m\][\!]\[\e[0m\]'
-    # - (skipping for now) light red (91) Exit code ($?) in parens
-    # - light green (92) user (\u) followed by colon
-    PS1=$PS1'\[\e[01;92m\]\u:\[\e[0m\]'
+    PS1=$PS1'\[$MY_YELLOW\][\!]\[$RESET\]'
+    # - Light red (91) Exit code ($?) in parens
+    PS1=$PS1'\[$MY_RED\]($?)\[$RESET\]'
+    # - light green (92) user (\u) followed by colon - skipping for now - I know who I am
+    # PS1=$PS1'\[$MY_GREEN\]\u:\[$RESET\]'
     # - light blue (94) directory (\w)
-    PS1=$PS1'\[\e[01;94m\]\w\[\e[0m\]'
+    PS1=$PS1'\[$MY_BLUE\]\w\[$RESET\]'
     #
     # - light yellow (93) git PS1 status wrapped in parens (if git bash prompt helpers are installed)
     if [[ $(type -t __git_ps1) == function ]] ; then
-        PS1=$PS1'$(__git_ps1 "\[\e[01;93m\](%s)")\[\e[0m\]'
+        PS1=$PS1'$(__git_ps1 "\[$MY_YELLOW\](%s)")\[$RESET\]'
     fi
     # VSCode doesn't need quite all of this given it already shows a lot of context. So let's
     # simplify it a bit. Only a few things from above
     if [ "$TERM_PROGRAM" = vscode ]  ; then
-        PS1='${DIRENV_PS1:+($DIRENV_PS1)}'
+        PS1='${DIRENV_PS1:+\[$MY_GREY\]($DIRENV_PS1)}\[$RESET\]'
+        PS1=$PS1'\[$MY_BLUE\]\W\[$RESET\]'
     fi
     # Lastly...the prompt
     PS1=$PS1'$ '
