@@ -18,6 +18,7 @@ brew "git"
 brew "jq"
 brew "yq" # like jq, but for yaml
 brew "the_silver_searcher"
+brew "ripgrep"
 brew "watch"
 brew "pstree"
 brew "gnupg"
