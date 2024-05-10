@@ -18,6 +18,7 @@ brew "git"
 brew "jq"
 brew "yq" # like jq, but for yaml
 brew "the_silver_searcher"
+brew "ripgrep"
 brew "watch"
 brew "pstree"
 brew "gnupg"
@@ -43,7 +44,7 @@ brew "pyenv"
 
 # Emacs
 tap "d12frosted/emacs-plus"
-brew "d12frosted/emacs-plus/emacs-plus@28", args: ["with-spacemacs-icon"], link: true
+brew "d12frosted/emacs-plus/emacs-plus@29", args: ["with-spacemacs-icon"], link: true
 # There is more instructions in the output, so you've got to do the following:
 #   ln -s /opt/homebrew/opt/emacs-plus@28/Emacs.app /Applications
 
