@@ -381,3 +381,9 @@ then
     initialization_message "  -GitHub CLI"
     source /Users/justinmills/.config/op/plugins.sh
 fi
+
+# Rust packages
+if [ -f "$HOME/.cargo/env" ] ; then
+    initialization_message "  -Cargo packages"
+    source "$HOME/.cargo/env"
+fi
