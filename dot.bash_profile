@@ -89,6 +89,10 @@ if [ "$IS_INTERACTIVE" = true ] ; then
     alias aws-stage="export AWS_PROFILE=stage AWS_REGION=us-east-1 && aws configure list &> /dev/null || aws sso login"
     alias aws-?='echo AWS_PROFILE=${AWS_PROFILE:-unset}'
 
+    alias nomad-dev="(source ~/.envs/hashistack-dev.sh && nomad ui -authenticate)"
+    alias nomad-qa="(source ~/.envs/hashistack-qa.sh && nomad ui -authenticate)"
+    alias nomad-prod="(source ~/.envs/hashistack-prod.sh && nomad ui -authenticate)"
+
     # wireguard vpn
     alias vpn-up="wg-quick up wg0"
     alias vpn-down="wg-quick down wg0"
@@ -164,8 +168,9 @@ fi
 if [ "$IS_INTERACTIVE" = true ] ; then
     initialization_message "  -Bash Completions"
 
-    # Homebrew completions
+    # Homebrew completions - this requires bash-completion@2
     [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+    # [[ -r "$(brew --prefix)/etc/bash_completion" ]] && . "$(brew --prefix)/etc/bash_completion"
 
     # Completions for screen wrapper (complete with hosts in known_hosts)
     complete -F _known_hosts scr
@@ -387,3 +392,11 @@ if [ -f "$HOME/.cargo/env" ] ; then
     initialization_message "  -Cargo packages"
     source "$HOME/.cargo/env"
 fi
+
+# ASDF
+# asdf
+if [ -f "$(brew --prefix)/opt/asdf/libexec/asdf.sh" ] ; then
+    initialization_message "  -ASDF"
+    source "$(brew --prefix)/opt/asdf/libexec/asdf.sh"
+fi
+
