@@ -8,4 +8,5 @@ while [ $running = 1 ] ; do
   if [ $? -ne 0 ] ; then
       running=0
   fi
+  sleep 5
 done
