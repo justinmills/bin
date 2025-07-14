@@ -66,6 +66,24 @@ if [ "$IS_INTERACTIVE" = true ] ; then
         fi
     }
 
+    # From Dan...
+    function rabbitmq_dev_ro {
+        source ~/.envs/vault-prod.sh
+        open "https://b-a08f4b19-da51-4825-9fcc-9596d2f3a9aa.mq.us-east-1.amazonaws.com/"
+        vault read -format=json rabbitmq/dev/shared-mq/creds/monitor-root-vhost | jq -r '.data'
+    }
+
+    function rabbitmq_qa_ro {
+        source ~/.envs/vault-prod.sh
+        open "https://b-62754c05-8675-4c95-b9d9-f2e7b2d5955b.mq.us-east-1.amazonaws.com/"
+        vault read -format=json rabbitmq/qa/shared-mq/creds/monitor-root-vhost | jq -r '.data'
+    }
+
+    function rabbitmq_prod_ro {
+        source ~/.envs/vault-prod.sh
+        open "https://b-de91df6f-85d6-4ca6-a44e-c9caefd68072.mq.us-east-1.amazonaws.com/"
+        vault read -format=json rabbitmq/prod/thumper/creds/monitor-root-vhost | jq -r '.data'
+    }
 fi
 
 # ------------------------------------------------------------------------------
@@ -81,12 +99,14 @@ if [ "$IS_INTERACTIVE" = true ] ; then
     # alias aws-dev="saml2aws console -a dev && saml2aws login -a dev"
     # alias aws-prod="saml2aws console -a prod && saml2aws login -a prod"
     # alias aws-feature="saml2aws console -a feature && saml2aws login -a feature"
-    alias aws-unset="unset AWS_PROFILE AWS_REGION"
+    alias aws-unset="unset AWS_PROFILE AWS_REGION AWS_ENDPOINT_URL AWS_CA_BUNDLE AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY"
+    alias aws-envs="env | grep AWS_"
     alias aws-dev="export AWS_PROFILE=dev AWS_REGION=us-east-1 && aws configure list &> /dev/null || aws sso login"
     alias aws-qa="export AWS_PROFILE=qa AWS_REGION=us-east-1 && aws configure list &> /dev/null || aws sso login"
     alias aws-prod="export AWS_PROFILE=prod AWS_REGION=us-east-1 && aws configure list &> /dev/null || aws sso login"
     alias aws-tools="export AWS_PROFILE=tools AWS_REGION=us-east-1 && aws configure list &> /dev/null || aws sso login"
     alias aws-stage="export AWS_PROFILE=stage AWS_REGION=us-east-1 && aws configure list &> /dev/null || aws sso login"
+    alias aws-local="export AWS_PROFILE=local-dataeng AWS_REGION=us-east-1"
     alias aws-?='echo AWS_PROFILE=${AWS_PROFILE:-unset}'
 
     alias nomad-dev="(source ~/.envs/hashistack-dev.sh && nomad ui -authenticate)"
@@ -139,6 +159,8 @@ add-to-path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
 # This is where pipx puts things
 add-to-path ~/.local/bin
+# This is where asdf puts things
+add-to-path ~/.asdf/shims
 
 # Elastic Beanstalk CLI
 # (https://github.com/aws/aws-elastic-beanstalk-cli-setup)
@@ -393,10 +415,8 @@ if [ -f "$HOME/.cargo/env" ] ; then
     source "$HOME/.cargo/env"
 fi
 
-# ASDF
-# asdf
-if [ -f "$(brew --prefix)/opt/asdf/libexec/asdf.sh" ] ; then
-    initialization_message "  -ASDF"
-    source "$(brew --prefix)/opt/asdf/libexec/asdf.sh"
-fi
-
+# ASDF - v0.16 no longer requires this!
+# if [ -f "$(brew --prefix)/opt/asdf/libexec/asdf.sh" ] ; then
+#     initialization_message "  -ASDF"
+#     source "$(brew --prefix)/opt/asdf/libexec/asdf.sh"
+# fi

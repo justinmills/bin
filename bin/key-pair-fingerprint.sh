@@ -6,9 +6,16 @@
 # ref: http://naoko.github.io/fingerprint-of-pem/
 #
 
+set -e
+
 FILE="$1"
 if [ -z "$FILE" ] ; then
     >&2 echo "Usage: $0 <path-to-private-key>"
     exit 1
 fi
+
+# This is the AWS style fingerprint
 openssl pkcs8 -in "${FILE}" -nocrypt -topk8 -outform DER | openssl sha1 -c
+
+# As a backup also dump the no-:-separated version
+ssh-keygen -lf "${FILE}"
