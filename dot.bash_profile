@@ -121,7 +121,8 @@ if [ "$IS_INTERACTIVE" = true ] ; then
     alias pr='poetry run'
     alias prp='poetry run poe'
 
-
+    # become admin
+    alias mkadmin='sudo dscl . append /Groups/admin GroupMembership $USER'
 fi
 
 # ------------------------------------------------------------------------------
@@ -313,8 +314,8 @@ fi
 # export PGHOST=127.0.0.1
 # export PGUSER=diesel
 # PG no longer puts itself in path...multiple versions I guess.
-if [ -f /opt/homebrew/opt/postgresql@15/bin/psql ] ; then
-    add-to-path /opt/homebrew/opt/postgresql@15/bin
+if [ -f /opt/homebrew/opt/postgresql@17/bin/psql ] ; then
+    add-to-path /opt/homebrew/opt/postgresql@17/bin
 fi
 
 # Building the python psycopg library doesn't work with brew ssl for some reason
