@@ -123,6 +123,9 @@ if [ "$IS_INTERACTIVE" = true ] ; then
 
     # become admin
     alias mkadmin='sudo dscl . append /Groups/admin GroupMembership $USER'
+
+    # Shortcut to run ci with auto-fixing things
+    alias ci='ruff check --fix . && black . && poe ci'
 fi
 
 # ------------------------------------------------------------------------------
