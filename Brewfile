@@ -59,10 +59,9 @@ brew "cmake"
 brew "libvterm"
 
 # Font required by spacemacs
-tap "homebrew/cask-fonts"
-brew "svn"  # This font requires svn...oh my
+# At one point it required svn, but I don't think that's true anymore, so removing this
+# brew "svn"
 cask "font-source-code-pro"
-
 
 # Databases
 brew "sqlite"
