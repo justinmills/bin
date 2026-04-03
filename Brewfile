@@ -4,6 +4,8 @@
 # Install via:
 #   cd <this directory>
 #   brew bundle
+# Check current brew setup
+#   brew bundle check --verbose
 #
 # Make sure to keep this up to date!
 #
@@ -42,19 +44,19 @@ brew "nvm"
 brew "pyenv"
 # pipenv installed separately
 
-# Emacs
+# (Spac)Emacs
+# Get this from here: https://github.com/d12frosted/homebrew-emacs-plus
 tap "d12frosted/emacs-plus"
-brew "d12frosted/emacs-plus/emacs-plus@29", args: ["with-spacemacs-icon"], link: true
-# There is more instructions in the output, so you've got to do the following:
-#   ln -s /opt/homebrew/opt/emacs-plus@28/Emacs.app /Applications
+cask "emacs-plus-app"
 
 # Support for emacs things
 # sql-mode (go to compile the sql formatter)
 brew "ruby"
 brew "go"
 brew "goreleaser"
-# ispell
 brew "ispell"
+brew "cmake"
+brew "libvterm"
 
 # Font required by spacemacs
 tap "homebrew/cask-fonts"
