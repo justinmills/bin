@@ -13,6 +13,6 @@ fi
 
 # We're good, so we can install the libraries we need to using pip directly.
 echo "Installing python dependencies..."
-poetry run pip install python-lsp-server[all] autoflake python-lsp-black pylsp-rope pylsp-mypy python-lsp-isort python-lsp-ruff
+poetry run pip install --upgrade python-lsp-server[all] autoflake python-lsp-black pylsp-rope pylsp-mypy python-lsp-isort python-lsp-ruff
 echo "All done!"
 
