@@ -126,6 +126,13 @@ if [ "$IS_INTERACTIVE" = true ] ; then
 
     # Shortcut to run ci with auto-fixing things
     alias ci='ruff check --fix . && black . && poe ci'
+
+    # Terraform aliases
+    alias tf='terraform'
+    alias tfi='terraform init'
+    alias tfp='terraform plan'
+    alias tfa='terraform apply'
+    alias tf-reset='rm -rf .terraform && rm -rf .terraform.lock.hcl && terraform init'
 fi
 
 # ------------------------------------------------------------------------------
